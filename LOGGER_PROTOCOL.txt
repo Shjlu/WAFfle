@@ -1,0 +1,57 @@
+
+SAVED INFO:
+id,log_type, urgency, date,ip, msg,
+
+
+PROTOCOL:
+AA BB CC DD DD DD DD EE EE EE EE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+
+AA - msg type:
+	0 - INSERT_LOG
+	1 - REQUEST_LOG
+	2 - DELETE_LOG
+		
+# IF msg type is insert log
+BB - urgency level
+	0 - default urgency for log type
+	1 - delete every day
+	2- delete every week
+	3 - delete every month
+	4 - delete every 3 months
+	5 - delete every year
+	255 - do not delete unless manually requested
+
+CC - log type:
+	1 - proxy is up - default urgency - 3
+	2 - proxy is down - default urgency - 3
+	4 - user request - default urgency - 2 
+	8 - attack attempt - default urgency - 5
+	16 - blocked user entry - default urgency - 2
+DD - relevant IP
+EE - data length
+FF- msg
+
+# IF msg type is REQUEST LOG
+BB - minimum urgency to return.
+CC - log types to return (USE BITWISE OR TO REQUEST MULTIPLE LOG TYPES)
+
+returned format:
+aa aa aa aa data
+aa - data length
+
+data is json:
+[
+	{
+		"id": 123,
+		"log_type": 1,
+		"urgency": 1,
+		"date": 345678765434567,
+		"ip": "127.7.7.1",
+		"msg": "sql injection"
+	},
+	[...]
+]
+
+
+# IF msg type is DELETE LOG
+4 bytes after AA - log id.

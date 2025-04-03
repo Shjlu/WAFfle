@@ -1,0 +1,18 @@
+{
+    "proxy_ip": "0.0.0.0",
+    "proxy_port": 1337,
+    "target_ip": "127.0.0.1",
+    "target_port": 5000,
+    "whitelist": 
+    {
+        "/example": ["SQLi", "XSS", "HRS", "XXE", "DT"]
+    },
+    "postgresql_ip": "localhost",
+    "postgresql_port": 9090,
+    "postgresql_db": "waffle",
+    "postgresql_user": "waffle",
+    "postgresql_password": "waffle",
+
+    "db_conn_pool_min": 1,
+    "db_conn_pool_max": 10000
+}

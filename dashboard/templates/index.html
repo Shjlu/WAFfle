@@ -1,0 +1,84 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+	google.charts.load("current", { packages: ["corechart"] });
+
+	google.charts.setOnLoadCallback(drawAttacksStats);
+	google.charts.setOnLoadCallback(drawBlockedEntriesStats);
+
+	function drawAttacksStats() {
+        var attacks_data = google.visualization.arrayToDataTable({{ attack_num | safe}});
+		var attacks_options = {
+			title: 'Attacks',
+			legendTextStyle: { color: '#FFF' },
+            titleTextStyle: { color: '#FFF' },
+			legend: {
+				color: 'white'
+			},
+			backgroundColor: {
+				fill: '#212529'
+			},
+
+
+		};
+		var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+		chart.draw(attacks_data, attacks_options);
+	}
+
+    function drawBlockedEntriesStats() {
+		var blocked_entries_data = google.visualization.arrayToDataTable({{ blocked_users_entries | safe}});
+        var view = new google.visualization.DataView(blocked_entries_data);
+        view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" }]);
+
+        var blocked_entries_options = {
+        title: "Blocked Users Entries:",
+        legendTextStyle: { color: '#FFF' },
+        titleTextStyle: { color: '#FFF' },
+        legend: {
+				color: 'white'
+			},
+			backgroundColor: {
+				fill: '#212529'
+			},
+			hAxis: {
+                textStyle:{color: '#FFF'}
+            },
+            vAxis: {
+                textStyle:{color: '#FFF'}
+            }
+      };
+		var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+		chart.draw(view, blocked_entries_options);
+	}
+</script>
+{% endblock %}
+{% block content %}
+
+
+
+
+<div class="container">
+  <div class="row">
+      <div class="border border-primary rounded m-3 col-md" id="piechart_3d" style="width: 600px; height: 500px;"></div>
+
+      <div class="border border-primary rounded m-3 col-md" id="barchart_values" style="width: 600px; height: 500px;"></div>
+
+  </div>
+</div>
+
+
+{% endblock %}

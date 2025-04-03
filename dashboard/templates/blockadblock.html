@@ -1,0 +1,43 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Blockadblock{% endblock %}
+
+{% block content %}
+    <p>
+        Copy paste the following code chunk into your website to ensure they're unaccessable with adblock.
+    </p>
+    
+    <pre class="border">
+        <code>
+    function check(window) {
+
+        let options = {
+            bait_class: "ad-block text-ads textAd banner_ad", // classes that adblockers like to block, feel free to add more and test 
+            bait_style: "width: 1px !important; height: 1px !important; position: absolute !important; left: -10000px !important; top: -1000px !important;",
+        };
+
+        var bait = document.createElement('div');
+        bait.className = options.bait_class;
+        bait.style = options.bait_style;
+        bait.innerHTML = "&nbsp;"
+        document.body.appendChild(bait);
+
+        window.setTimeout(() => {
+            if (!bait || bait.innerHTML.length == 0
+            || bait.clientHeight === 0 ||getComputedStyle(bait).display == 'none')
+            {
+                let event = new Event("adblock_detected");
+                document.dispatchEvent(event);
+            }
+            bait.remove();
+        }, 200);
+
+    };
+
+    window.onload = () => {check(window);setInterval(() => {check(window);}, 30000)};
+    // replace the function to define behaviour when adblock is detected
+    document.addEventListener("adblock_detected", ()=>{document.write("DETECTED!!!!!!");});
+        
+        </code>
+    </pre>
+{% endblock %}

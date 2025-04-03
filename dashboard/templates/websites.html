@@ -1,0 +1,33 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Websites{% endblock %}
+
+{% block content %}
+<a href="{{url_for('websites.add_website')}}" class="btn btn-primary float-end">Add a website</a>
+<div class="clearfix"></div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td scope="col">#</td>
+            <td scope="col">Domain</td>
+            <td scope="col">Addresses</td>
+            <td scope="col">Blocked Countries</td>
+            <td scope="col">Endpoint info</td>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for i in websites %}
+        
+        <tr>
+            <td></td>
+            <td>{{ i['domain'] }}</td>
+            <td>{{ i['addresses']|safe }}</td>
+            <td class="h4">{{ i['blocked_country_codes'] }}</td>
+            <td>{{ i["whitelist_endpoints"]|safe }}</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

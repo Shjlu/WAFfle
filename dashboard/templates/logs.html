@@ -1,0 +1,31 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Logs{% endblock %}
+
+{% block content %}
+    <h1>Latest logs</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td scope="col">#</td>
+                <td scope="col">IP</td>
+                <td scope="col">Date</td>
+                <td scope="col">Urgency</td>
+                <td scope="col">Message</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in logs %}
+
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.relevant_ip }}</td>
+                <td>{{ i.date }}</td>
+                <td>{{ i.urgency }}</td>
+                <td>{{ i.message }}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

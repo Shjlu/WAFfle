@@ -1,0 +1,34 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Blacklist{% endblock %}
+
+{% block content %}
+<form action="{{url_for('blacklist.remove_entries')}}" method="post">
+    {% if blacklist %}
+    <input type="submit" value="Delete" class="btn btn-danger float-end">
+    <div class="clearfix"></div>
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td scope="col">#</td>
+                <td scope="col">IP</td>
+                <td scope="col">Date</td>
+                <td scope="col">Reason</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in blacklist %}
+            
+            <tr>
+                <td><input type="checkbox" name="ips[]" value="{{i.ip}}"></td>
+                <td>{{ i.ip }}</td>
+                <td>{{ i.date }}</td>
+                <td>{{ i.reason }}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+{% endblock %}
